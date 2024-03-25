@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <title>0326실습 - 보드게임 만들기</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" as="style" href="./style.css">
+</head>
+<body>
+    <div class="table">
+        <div class="board">
+            <div class="center">
+                <div class="community-chest-deck">
+                    <h2 class="label">공용 상자</h2>
+                    <div class="deck"></div>
+                </div>
+                <h1 class="title">모노폴리</h1>
+                <div class="chance-deck">
+                    <h2 class="label">찬스 카드</h2>
+                    <div class="deck"></div>
+                </div>
+            </div>
+    
+            <div class="space corner go">
+                <div class="container">
+                    <div class="instructions">여기를 지날때마다 급여 20만원을 받습니다</div>
+                    <div class="go-word">출발</div>
+                </div>
+                <div class="arrow fa fa-long-arrow-left"></div>
+            </div>
+    
+            <div class="row horizontal-row bottom-row">
+                <div class="space property">
+                    <div class="container">
+                        <div class="color-bar light-blue"></div>
+                        <div class="name">코네티컷 에비뉴</div>
+                        <div class="price">12만원</div>
+                    </div>
+                </div>
+                <div class="space property">
+                    <div class="container">
+                        <div class="color-bar light-blue"></div>
+                        <div class="name">버몬트 에비뉴</div>
+                        <div class="price">10만원</div>
+                    </div>
+                </div>
+                <div class="space chance">
+                    <div class="container">
+                        <div class="name">찬스 카드</div>
+                        <i class="drawing fa fa-question"></i>
+                    </div>
+                </div>
+                <div class="space property">
+                    <div class="container">
+                        <div class="color-bar light-blue"></div>
+                        <div class="name">오리엔탈 에비뉴</div>
+                        <div class="price">10만원</div>
+                    </div>
+                </div>
+                <div class="space railroad">
+                    <div class="container">
+                        <div class="name">레일로드</div>
+                        <i class="drawing fa fa-subway"></i>
+                        <div class="price">20만원</div>
+                    </div>
+                </div>
+                <div class="space fee income-tax">
+                    <div class="container">
+                        <div class="name">세금 징수</div>
+                        <div class="diamond"></div>
+                        <div class="instructions">당신의 자산의 10%나 20만원을 내놓으세요!</div>
+                    </div>
+                </div>
+                <div class="space property">
+                    <div class="container">
+                        <div class="color-bar dark-purple"></div>
+                        <div class="name">발틱 에비뉴</div>
+                        <div class="price">5만원</div>
+                    </div>
+                </div>
+                <div class="space community-chest">
+                    <div class="container">
+                        <div class="name">공용상자</div>
+                        <i class="drawing fa fa-cube"></i>
+                        <div class="instructions">카드를 한장 뽑아 지시사항을 따르세요</div>
+                    </div>
+                </div>
+                <div class="space property">
+                    <div class="container">
+                        <div class="color-bar dark-purple"></div>
+                        <div class="name three-line-name">Mediter-<br>ranean<br>Avenue</div>
+                        <div class="price">가격 $50</div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="space corner jail">
+                <div class="just">Just</div>
+                <div class="drawing">
+                    <div class="container">
+                        <div class="name">In</div>
+                        <div class="window">
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <i class="person fa fa-frown-o"></i>
+                        </div>
+                        <div class="name">Jail</div>
+                    </div>
+                </div>
+                <div class="visiting">Visiting</div>
+            </div>
+    
+            <div class="row vertical-row left-row">
+                <div class="space property">
+                    <div class="container">
+                        <div class="color-bar orange"></div>
+                        <div class="name">뉴욕 에비뉴</div>
+                        <div class="price">가격 $200</div>
+                    </div>
+                </div>
+                <div class="space property">
+                    <div class="container">
+                        <div class="color-bar orange"></div>
+                        <div class="name">테네시 에비뉴</div>
+                        <div class="price">가격 $180</div>
+                    </div>
+                </div>
+                <div class="space community-chest">
+                    <div class="container">
+                        <div class="name">공동체 상자</div>
+                        <i class="drawing fa fa-cube"></i>
+                        <div class="instructions">상자 위의 지시사항을 따르세요</div>
+                    </div>
+                </div>
+                <div class="space property">
+                    <div class="container">
+                        <div class="color-bar orange"></div>
+                        <div class="name">세인트 제임스 에비뉴</div>
+                        <div class="price">가격 $180</div>
+                    </div>
+                </div>
+                <div class="space railroad">
+                    <div class="container">
+                        <div class="name long-name">펜실베이니아 철도</div>
+                        <i class="drawing fa fa-subway"></i>
+                        <div class="price">가격 $200</div>
+                    </div>
+                </div>
+                <div class="space property">
+                    <div class="container">
+                        <div class="color-bar purple"></div>
+                        <div class="name">버지니아 에비뉴</div>
+                        <div class="price">가격 $160</div>
+                    </div>
+                </div>
+                <div class="space property">
+                    <div class="container">
+                        <div class="color-bar purple"></div>
+                        <div class="name">스테이츠 에비뉴</div>
+                        <div class="price">가격 $140</div>
+                    </div>
+                </div>
+                <div class="space utility electric-company">
+                    <div class="container">
+                        <div class="name">전기 회사</div>
+                        <i class="drawing fa fa-lightbulb-o"></i>
+                        <div class="price">가격 $150</div>
+                    </div>
+                </div>
+                <div class="space property">
+                    <div class="container">
+                        <div class="color-bar purple"></div>
+                        <div class="name">세인트 찰스 플레이스</div>
+                        <div class="price">가격 $140</div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="space corner free-parking">
+                <div class="container">
+                    <div class="name">무료</div>
+                    <i class="drawing fa fa-car"></i>
+                    <div class="name">주차</div>
+                </div>
+            </div>
+    
+            <div class="row horizontal-row top-row">
+                <div class="space property">
+                    <div class="container">
+                        <div class="color-bar red"></div>
+                        <div class="name">켄터키 에비뉴</div>
+                        <div class="price">가격 $220</div>
+                    </div>
+                </div>
+                <div class="space chance">
+                    <div class="container">
+                        <div class="name">찬스</div>
+                        <i class="drawing fa fa-question blue"></i>
+                    </div>
+                </div>
+                <div class="space property">
+                    <div class="container">
+                        <div class="color-bar red"></div>
+                        <div class="name">인디애나 에비뉴</div>
+                        <div class="price">가격 $220</div>
+                    </div>
+                </div>
+                <div class="space property">
+                    <div class="container">
+                        <div class="color-bar red"></div>
+                        <div class="name">일리노이 에비뉴</div>
+                        <div class="price">가격 $200</div>
+                    </div>
+                </div>
+                <div class="space railroad">
+                    <div class="container">
+                        <div class="name">B & O 철도</div>
+                        <i class="drawing fa fa-subway"></i>
+                        <div class="price">가격 $200</div>
+                    </div>
+                </div>
+                <div class="space property">
+                    <div class="container">
+                        <div class="color-bar yellow"></div>
+                        <div class="name">대서양 에비뉴</div>
+                        <div class="price">가격 $260</div>
+                    </div>
+                </div>
+                <div class="space property">
+                    <div class="container">
+                        <div class="color-bar yellow"></div>
+                        <div class="name">벤토르 에비뉴</div>
+                        <div class="price">가격 $260</div>
+                    </div>
+                </div>
+                <div class="space utility waterworks">
+                    <div class="container">
+                        <div class="name">수도 회사</div>
+                        <i class="drawing fa fa-tint"></i>
+                        <div class="price">가격 $120</div>
+                    </div>
+                </div>
+                <div class="space property">
+                    <div class="container">
+                        <div class="color-bar yellow"></div>
+                        <div class="name">마빈 가든</div>
+                        <div class="price">가격 $280</div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="space corner go-to-jail">
+                <div class="container">
+                    <div class="name">감옥으로 가세요</div>
+                    <i class="drawing fa fa-gavel"></i>
+                    <div class="name">감옥</div>
+                </div>
+            </div>
+    
+            <div class="row vertical-row right-row">
+                <div class="space property">
+                    <div class="container">
+                        <div class="color-bar green"></div>
+                        <div class="name">태평양 에비뉴</div>
+                        <div class="price">가격 $300</div>
+                    </div>
+                </div>
+                <div class="space property">
+                    <div class="container">
+                        <div class="color-bar green"></div>
+                        <div class="name three-line-name">노스 캐롤라이나 에비뉴</div>
+                        <div class="price">가격 $300</div>
+                    </div>
+                </div>
+                <div class="space community-chest">
+                    <div class="container">
+                        <div class="name">공동체 상자</div>
+                        <i class="drawing fa fa-cube"></i>
+                        <div class="instructions">상자 위의 지시사항을 따르세요</div>
+                    </div>
+                </div>
+                <div class="space property">
+                    <div class="container">
+                        <div class="color-bar green"></div>
+                        <div class="name long-name">펜실베이니아 에비뉴</div>
+                        <div class="price">가격 $320</div>
+                    </div>
+                </div>
+                <div class="space railroad">
+                    <div class="container">
+                        <div class="name">쇼트 라인</div>
+                        <i class="drawing fa fa-subway"></i>
+                        <div class="price">가격 $200</div>
+                    </div>
+                </div>
+                <div class="space chance">
+                    <div class="container">
+                        <div class="name">찬스</div>
+                        <i class="drawing fa fa-question"></i>
+                    </div>
+                </div>
+                <div class="space property">
+                    <div class="container">
+                        <div class="color-bar dark-blue"></div>
+                        <div class="name">파크 플레이스</div>
+                        <div class="price">가격 $350</div>
+                    </div>
+                </div>
+                <div class="space fee luxury-tax">
+                    <div class="container">
+                        <div class="name">고급 세금</div>
+                        <div class="drawing fa fa-diamond"></div>
+                        <div class="instructions">$75.00을 지불하세요</div>
+                    </div>
+                </div>
+                <div class="space property">
+                    <div class="container">
+                        <div class="color-bar dark-blue"></div>
+                        <div class="name">보드워크</div>
+                        <div class="price">가격 $400</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
