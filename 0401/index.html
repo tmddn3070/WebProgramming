@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>0401 - Input 실습</title>
+</head>
+<body>
+    <div class="main mx-auto p-8">
+        <h1 class="text-4xl font-bold mb-4">Input 실습</h1>
+        <form action="">
+            <label for="name" class="block mb-2">이름</label>
+            <input type="text" id="name" name="name" class="border border-black p-2 mb-4" />
+            <label for="email" class="block mb-2">이메일</label>
+            <input type="email" id="email" name="email" class="border border-black p-2 mb-4" />
+            <label for="password" class="block mb-2">비밀번호</label>
+            <input type="password" id="password" name="password" class="border border-black p-2 mb-4" />
+            <label for="date" class="block mb-2">날짜</label>
+            <input type="date" id="date" name="date" class="border border-black p-2 mb-4" />
+            <label for="time" class="block mb-2">시간</label>
+            <input type="time" id="time" name="time" class="border border-black p-2 mb-4" />
+            <label for="color" class="block mb-2">색상</label>
+            <input type="color" id="color" name="color" class="border border-black p-2 mb-4" />
+            <label for="range" class="block mb-2">범위</label>
+            <input type="range" id="range" name="range" class="border border-black p-2 mb-4" />
+            <label for="file" class="block mb-2">파일</label>
+            <input type="file" id="file" name="file" class="border border-black p-2 mb-4" />
+            <label for="submit" class="block mb-2">제출</label>
+            <input type="submit" id="submit" name="submit" class="border border-black p-2 mb-4" />
+        </form>
+    </div>
+
+    <div class="register mx-auto p-8">
+        <h2 class="text-2xl font-bold mb-4">회원가입</h2>
+        <form action="">
+            <label for="id" class="block mb-2">아이디</label>
+            <input type="text" id="id" name="id" class="border border-black p-2 mb-4" />
+            <label for="pw" class="block mb-2">비밀번호</label>
+            <input type="password" id="pw" name="pw" class="border border-black p-2 mb-4" />
+            <label for="pwCheck" class="block mb-2">비밀번호 확인</label>
+            <input type="password" id="pwCheck" name="pwCheck" class="border border-black p-2 mb-4" />
+            <label for="email" class="block mb-2">이메일</label>
+            <input type="email" id="email" name="email" class="border border-black p-2 mb-4" />
+            <label for="phone" class="block mb-2">전화번호</label>
+            <input type="tel" id="phone" name="phone" class="border border-black p-2 mb-4" />
+            <label for="birth" class="block mb-2">생년월일</label>
+            <input type="date" id="birth" name="birth" class="border border-black p-2 mb-4" />
+        </form>
+    </div>
+</body>
+</html>
