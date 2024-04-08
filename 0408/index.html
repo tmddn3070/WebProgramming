@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>모의고사 클론 코딩</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@100..900&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+            body {
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+                justify-content: center;
+                align-items: center;
+                font-family: "Noto Sans KR", sans-serif;
+                font-optical-sizing: auto;
+                font-weight: 400;
+                font-style: normal;
+                color: white;
+            }
+
+            .main {
+                width: 60%;
+            }
+
+            span {
+                text-decoration: underline;
+                color: red;
+            }
+
+            legend {
+                font-family: "Nanum Pen Script", cursive;
+                font-weight: 400;
+                font-style: normal;
+                text-align: center;
+                font-size: 1.25rem;
+            }
+
+            h1,
+            h2 {
+                text-align: center;
+            }
+
+            h2 {
+                margin-bottom: 0;
+            }
+
+            fieldset {
+                border: 10px dashed rgb(255, 0, 0);
+                background-color: rgb(43, 46, 56);
+                border-radius: 20px;
+            }
+        </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+        <script>
+            gsap.from(".container", { opacity: 0, duration: 1, delay: 0.5, y: -50 });
+            gsap.from(".main", { opacity: 0, duration: 1, delay: 1, y: -50 });
+            gsap.from("h2", { opacity: 0, duration: 1, delay: 1.5, y: -50 });
+            gsap.from("hr", { opacity: 0, duration: 1, delay: 2, x: -200 });
+            gsap.from("fieldset", { opacity: 0, duration: 1, delay: 2.5, scale: 0.5 });
+        </script>
+    </head>
+    </head>
+    <body class="bg-gray-900 text-white">
+        <div class="container mx-auto p-4">
+            <h2 class="text-3xl font-bold mb-4">2024학년도 3월 고1 전국연합학력평가 문제지</h2>
+            <h1 class="text-2xl font-bold mb-4">국어 영역</h1>
+            <hr class="w-80 mx-auto mb-4" />
+            <div class="main">
+                <h3 class="text-xl font-bold mb-4">
+                    7. 가~다에 따라 보기에 대한 언론 보도를 평가한 내용으로 적절하지
+                    <span>않은</span> 것은?
+                </h3>
+                <form action="" method="post">
+                    <fieldset class="border-4 border-red-500 bg-gray-800 rounded-lg p-4">
+                        <legend class="font-bold text-2xl text-center mb-4">보 기</legend>
+                        <p class="mb-4">
+                            다음은 ○○방송사의 의뢰로 △△여론조사 기관에서 세 차례 실시한 당선인
+                            예측 여론조사 결과의 일부이다. (세 조사 모두 신뢰 수준 95%, 오차
+                            범위 8.8%P임.)
+                        </p>
+                        <table class="border-collapse border border-white">
+                            <tr>
+                                <td colspan="2" class="border border-white">구분</td>
+                                <td class="border border-white">1차 조사</td>
+                                <td class="border border-white">2차 조사</td>
+                                <td class="border border-white">3차 조사</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="border border-white">조사일</td>
+                                <td class="border border-white">선거일 15일 전</td>
+                                <td class="border border-white">선거일 10일 전</td>
+                                <td class="border border-white">선거일 5일 전</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="4" class="border border-white">조사 결과</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-white">A 후보</td>
+                                <td class="border border-white">42%</td>
+                                <td class="border border-white">38%</td>
+                                <td class="border border-white">39%</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-white">B 후보</td>
+                                <td class="border border-white">32%</td>
+                                <td class="border border-white">37%</td>
+                                <td class="border border-white">38%</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-white">C 후보</td>
+                                <td class="border border-white">18%</td>
+                                <td class="border border-white">17%</td>
+                                <td class="border border-white">17%</td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                    <div class="mt-4">
+                        <input type="radio" name="answer" id="one" class="mr-2" />
+                        <label for="one"
+                            >1차 조사 결과를 선거일 14일 전에 “A 후보, 10%P 이상의 차이로 B 후보와
+                            C 후보에 우세”라고 보도하는 것은 나와 다 중 어느 것에도 위배되지
+                            않겠군.</label
+                        ><br />
+                        <input type="radio" name="answer" id="two" class="mr-2" />
+                        <label for="two"
+                            >2차 조사 결과를 선거일 9일 전에 “A 후보는 B 후보에 조금 앞서고, C
+                            후보는 3위”라고 보도하는 것은 나에 위배되지만, 다에 위배되지
+                            않겠군.</label
+                        ><br />
+                        <input type="radio" name="answer" id="three" class="mr-2" />
+                        <label for="three"
+                            >3차 조사 결과를 선거일 4일 전에 “A후보는 오차 범위 내에서 1위”라고
+                            보도하는 것은 가와 다에 모두 위배되겠군.</label
+                        ><br />
+                        <input type="radio" name="answer" id="four" class="mr-2" />
+                        <label for="four"
+                            >1차 조사 결과를 선거일 14일 전에 “A 후보 1위, B 후보 2위, C 후보
+                            3위”라고 보도하는 것은 나에 위배되지 않고, 2차 조사 결과를 선거일 9일
+                            전에 같은 표현으로 보도하는 것은 다에 위배되겠군.</label
+                        ><br />
+                        <input type="radio" name="answer" id="five" class="mr-2" />
+                        <label for="five"
+                            >2차 조사 결과를 선거일 9일 전에 “B 후보, A 후보와 오차 범위 내
+                            경합”이라고 보도하는 것은 다에 위배되지 않고, 3차 조사 결과를 선거일
+                            4일 전에 같은 표현으로 보도하는 것은 가에 위배되겠군.</label
+                        ><br />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
