@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>0416 subject</title>
+	<script src="https://kit.fontawesome.com/7ae3a6a91c.js" crossorigin="anonymous"></script>
+</head>
+<style>
+	.container {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		grid-gap: 10px;
+		justify-content: center;
+		align-items: center;
+		height: 100vh;
+	}
+
+	article {
+		width: 50px;
+		height: 30px;
+		border: 1px solid red;
+		margin: 10px;
+	}
+
+	article:nth-child(1),
+	article:nth-child(2),
+	article:nth-child(3),
+	article:nth-child(4),
+	article:nth-child(5),
+	article:nth-child(6),
+	article:nth-child(7),
+	article:nth-child(8),
+	article:nth-child(9) {
+		transform: rotate(45deg);
+	}
+
+</style>
+<body>
+	<div class="container">
+		<article>box1</article>
+		<article>box2</article>
+		<article>box3</article>
+		<article>box4</article>
+		<article>box5</article>
+		<article>box6</article>
+		<article>box7</article>
+		<article>box8</article>
+		<article>box9</article>
+	</div>
+</body>
+
+</html>
