@@ -1,0 +1,47 @@
+@font-face {
+    font-family: abster;
+    src: url(font/abster-webfont.woff) format('woff');
+} 
+
+* { 
+    margin: 0;
+    padding: 0;
+}
+
+body { 
+    width: 100%;
+    height: 100vh;
+}
+
+.header { 
+    width: 80%;
+    height: 80px;
+}
+
+h1 a {
+    text-decoration: none;
+    font-family: abster;
+    color: white;
+}
+
+.header ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    text-decoration: none;
+}
+
+.header ul:hover {
+    color: yellow;
+}
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+
+
+
