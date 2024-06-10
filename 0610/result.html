@@ -1,0 +1,34 @@
+<h3>덧셈 계산기</h3>
+<form name="myform">
+    첫번째 정수: <input type="number" name="num1" value="0"><br>
+    두번째 정수: <input type="number" name="num2" value="0"><br>
+    합계: <input type="text" name="result" readonly><br>
+    <input type="button" value="계산하기" onclick="myform.result.value=parseInt(myform.num1.value)+parseInt(myform.num2.value)">
+</form>
+
+<table border="3">
+    <tr>
+        <td>섭씨온도</td>
+        <td>화씨온도</td>
+    </tr>
+    <script>
+        for (let i = 0; i <= 100; i += 10) {
+            let ce = i;
+            let fa = ce * 9 / 5 + 32;
+            document.write(`<tr><td>${ce}</td><td>${fa}</td></tr>`);
+        }
+    </script>
+</table>
+
+<h1>구구단표</h1>
+<table border='2'>
+    <script>
+        for (let i = 1; i <= 9; i++) {
+            document.write("<tr>");
+            for (let j = 1; j <= 9; j++) {
+                document.write(`<td>${i * j}</td>`);
+            }
+            document.write("</tr>");
+        }
+    </script>
+</table>

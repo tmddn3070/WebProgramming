@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heading 리스트</title>
+    <style>
+        body {
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            margin: 20px 0;
+            transition: transform 0.3s ease;
+        }
+        
+        h1 { font-size: 32px; color: blue; }
+        h2 { font-size: 28px; color: green; }
+        h3 { font-size: 24px; color: red; }
+        h4 { font-size: 20px; color: orange; }
+        h5 { font-size: 16px; color: purple; }
+        h6 { font-size: 12px; color: gray; }
+        
+        h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
+            transform: scale(1.1);
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        li {
+            background-color: #add8e6;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        
+        li:hover {
+            background-color: #87cefa;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        for (let i = 1; i <= 6; i++) {
+            document.write("<h" + i + ">Heading " + i + "</h" + i + ">");
+        }
+        for (let i = 1; i <= 6; i++) {
+            document.write("<ul>");
+            for (let j = 1; j <= 3; j++) {
+                document.write("<li>Item " + j + "</li>");
+            }
+            document.write("</ul>");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>온도변환기</title>
+</head>
+<body>
+    <table border="3">
+    <tr>
+        <td>섭씨온도</td>
+        <td>화씨온도</td>
+    </tr>
+    <script>
+        for (let i = 0; i <= 100; i += 10) {
+            let celsius = i;
+            let fahrenheit = celsius * 9 / 5 + 32;
+            document.write(`<tr><td>${celsius}</td><td>${fahrenheit}</td></tr>`);
+        }
+    </script>
+</body>
+</html>

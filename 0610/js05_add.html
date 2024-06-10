@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <label for="gugudan">구구단 숫자 입력:</label>
+        <input type="number" id="gugudan" name="gugudan">
+        <button onclick="calculateGugudan(event)">계산</button>
+    </form>
+
+    <form>
+        <label for="trig">삼각함수 각도 입력:</label>
+        <input type="number" id="trig" name="trig">
+        <button onclick="calculateTrig(event)">계산</button>
+    </form>
+
+    <div id="gugudanResult"></div>
+    <div id="trigResult"></div>
+
+    <script>
+        function calculateGugudan(event) {
+            event.preventDefault();
+            var num = parseInt(document.getElementById("gugudan").value);
+            var result = "";
+            for (let i = 1; i <= 9; i++) {
+                result += num + " x " + i + " = " + (num * i) + "<br>";
+            }
+            document.getElementById("gugudanResult").innerHTML = result;
+        }
+
+        function calculateTrig(event) {
+            event.preventDefault();
+            var angle = parseInt(document.getElementById("trig").value);
+            var result = "";
+            result += "sin(" + angle + ") = " + Math.sin(angle * Math.PI / 180).toFixed(2) + "<br>";
+            result += "cos(" + angle + ") = " + Math.cos(angle * Math.PI / 180).toFixed(2) + "<br>";
+            result += "tan(" + angle + ") = " + Math.tan(angle * Math.PI / 180).toFixed(2) + "<br>";
+            document.getElementById("trigResult").innerHTML = result;
+        }
+
+        document.write("<h1>구구단표</h1>");
+        document.write("<table border='2'>");
+        for (let i = 1; i <= 9; i++) {
+            document.write("<tr>");
+            for (let j = 1; j <= 9; j++) {
+                document.write("<td>" + i + "x" + j + "=" + i * j + "</td>");
+            }
+            document.write("</tr>");
+        }
+        document.write("</table>");
+
+        document.write("<h1>삼각함수 계산 표</h1> (1도씩)");
+        document.write("<table border='2'>");
+        for (let i = 0; i <= 90; i++) {
+            document.write("<tr>");
+            document.write("<td>" + i + "도</td>");
+            document.write("<td>sin(" + i + ")=" + Math.sin(i * Math.PI / 180) + "</td>");
+            document.write("<td>cos(" + i + ")=" + Math.cos(i * Math.PI / 180) + "</td>");
+            document.write("<td>tan(" + i + ")=" + Math.tan(i * Math.PI / 180) + "</td>");
+            
+            document.write("</tr>");
+        }
+    </script>
+</body>
+</html>
