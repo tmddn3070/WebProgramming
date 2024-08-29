@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title></title>
+    <script>
+        function get() {
+            let val = document.getElemntById("special").innerHTML;
+            alert(val);
+        }
+        function set(v) {
+            document.getElemntById("special").innerHTML = v;
+    
+        }
+    </script>
+</head>
+<body>
+    <div id="ex"> 여기가 Div로 선언된 곳입니다. </div>
+    <a href="#" onclick="get()">Get</a>]
+    <a href="#" onclick="set('Hello JavaScript!')">Set</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HUE</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+
+        .color-picker {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            transition: background-color 1.8s ease;
+        }
+
+        .color-input {
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            border: none;
+            outline: none;
+            box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="color-picker" class="color-picker">
+        <input type="color" id="color-input" class="color-input">
+    </div>
+
+    <script>
+        const colorInput = document.getElementById('color-input');
+        const colorPicker = document.getElementById('color-picker');
+
+        colorInput.addEventListener('input', () => {
+            const selectedColor = colorInput.value;
+            colorPicker.style.backgroundColor = selectedColor;
+        });
+    </script>
+</body>
+
+</html>

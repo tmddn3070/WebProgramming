@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="flex justify-center items-center h-screen bg-black">
+    <div class="text-center">
+        <form id="statusForm" class="mb-6">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white rounded px-6 py-3">랜덤 상태코드</button>
+        </form>
+        <div id="imageContainer" class="hidden">
+            <img id="statusCodeImage" src="" alt="Status Code Image" class="mx-auto max-w-full h-auto">
+        </div>
+    </div>
+
+    <script>
+        const statusCodes = [
+            100, 101, 102, 103, 200, 201, 202, 203, 204, 205, 206, 207, 208, 226, 
+            300, 301, 302, 303, 304, 305, 306, 307, 308, 400, 401, 402, 403, 404, 
+            406, 407, 408, 409, 410, 411, 412, 413, 414, 415, 416, 417, 418, 
+            419, 420, 421, 422, 423, 424, 425, 426, 428, 429, 431, 444, 449, 450, 
+            451, 499, 500, 501, 502, 503, 504, 505, 506, 507, 508, 510, 511, 599
+        ];
+
+        document.getElementById('statusForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const statusCode = statusCodes[Math.floor(Math.random() * statusCodes.length)];
+            const imageUrl = `https://proxy.cors.sh/https://http.cat/${statusCode}`;
+
+            try {
+                const response = await fetch(imageUrl, {
+                    headers: { 'x-cors-api-key': 'temp_ea03cf4d92073da5622b6c65ee031d13' }
+                });
+                if (response.ok) {
+                    document.getElementById('statusCodeImage').src = imageUrl;
+                    document.getElementById('imageContainer').classList.remove('hidden');
+                } else {
+                    throw new Error('오류');
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+</html>
