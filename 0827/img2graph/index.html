@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Img2Graph</title>
+    <meta
+      name="description"
+      content="Convert your pixel art images into graphs on Desmos"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="index.js"></script>
+  </head>
+
+  <body class="bg-gray-950 text-gray-300 min-h-screen flex flex-col items-center justify-center p-6">
+    <div class="bg-gray-800 text-gray-100 rounded-lg shadow-xl p-8 max-w-xl w-full">
+      <div class="text-center mb-8">
+        <h1 class="text-4xl font-extrabold text-gray-50">Img2Graph</h1>
+        <p class="text-lg mt-3 text-gray-400">이미지를 그래프로 변환하세요!</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <p id="filename" class="text-sm text-gray-500 mb-4"></p>
+          <label
+            for="upload"
+            class="cursor-pointer bg-gray-700 hover:bg-gray-600 text-gray-200 font-bold py-2 px-4 rounded-lg shadow-md transition duration-300"
+            id="upload-button"
+          >
+            사진 업로드
+          </label>
+          <input
+            type="file"
+            name="upload"
+            id="upload"
+            accept="image/png"
+            onchange="processImg()"
+            hidden
+          />
+
+          <div class="mt-8">
+            <h2 class="text-2xl font-semibold text-gray-50 mb-4">사용법</h2>
+            <ol class="list-decimal list-inside space-y-2 text-gray-400">
+              <li>
+                <b>사진 업로드</b> 버튼을 눌러 원하는 이미지를 선택하세요.
+              </li>
+              <li>
+                <b>식 복사하기</b> 버튼을 눌러 생성된 방정식을 복사한 뒤
+                <a
+                  href="https://www.desmos.com/calculator"
+                  target="_blank"
+                  class="text-indigo-400 underline hover:text-indigo-300"
+                  >Desmos</a
+                >
+                에 붙여넣기 하세요.
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-xl font-semibold text-gray-50 mb-4">생성된 식</h3>
+          <textarea
+            id="result"
+            class="w-full h-32 p-4 rounded-lg border-2 border-gray-600 bg-gray-900 text-gray-100 focus:border-blue-500 transition duration-300"
+          ></textarea>
+          <button
+            onclick="copyToClipboard()"
+            class="mt-4 bg-gray-700 hover:bg-gray-600 text-gray-200 font-bold py-2 px-4 rounded-lg shadow-md transition duration-300"
+          >
+            식 복사하기 
+          </button>
+          <p id="copy-status" class="text-sm text-gray-500 mt-2"></p>
+        </div>
+      </div>
+    </div>
+    <canvas id="cnvs" hidden></canvas>
+  </body>
+</html>
