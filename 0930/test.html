@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matter.js Advanced Physics Playground</title>
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #canvas-container {
+            position: relative;
+        }
+
+        #toolbar {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        canvas {
+            border: 2px solid #4f46e5;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 flex justify-center items-center h-screen">
+    <div class="flex flex-col items-center">
+        <!-- 에디터 도구 -->
+        <div id="toolbar" class="mb-4 p-4 bg-gray-800 text-white rounded-lg shadow-lg">
+            <button id="select-rectangle" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded">사각형 선택</button>
+            <button id="select-circle" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded">원 선택</button>
+            <button id="select-triangle" class="bg-purple-500 hover:bg-purple-600 px-4 py-2 rounded">삼각형 선택</button>
+            <button id="select-bomb" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded">폭탄 선택</button>
+            <button id="reverse-gravity" class="bg-teal-500 hover:bg-teal-600 px-4 py-2 rounded">중력 반전</button>
+            <button id="add-magnet" class="bg-indigo-500 hover:bg-indigo-600 px-4 py-2 rounded">자석</button>
+            <button id="increase-bounce" class="bg-pink-500 hover:bg-pink-600 px-4 py-2 rounded">바운스 증가</button>
+            <button id="increase-speed" class="bg-gray-500 hover:bg-gray-600 px-4 py-2 rounded">속도 증가</button>
+        </div>
+
+        <!-- 캔버스 -->
+        <div id="canvas-container" class="relative">
+            <canvas id="world" width="800" height="600"></canvas>
+        </div>
+    </div>
+
+    <!-- Matter.js 라이브러리 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script>
+        // Matter.js 모듈 불러오기
+        const { Engine, Render, Runner, World, Bodies, Mouse, MouseConstraint, Events } = Matter;
+
+        // 엔진 및 렌더러 생성
+        const engine = Engine.create();
+        const { world } = engine;
+
+        const render = Render.create({
+            element: document.getElementById('canvas-container'),
+            canvas: document.getElementById('world'),
+            engine: engine,
+            options: {
+                width: 800,
+                height: 600,
+                wireframes: false,
+                background: 'lightblue'
+            }
+        });
+
+        Render.run(render);
+        const runner = Runner.create();
+        Runner.run(runner, engine);
+
+        // 경계를 넘지 못하도록 경계 설정
+        const boundaries = [
+            Bodies.rectangle(400, 0, 810, 30, { isStatic: true }),    // 상단
+            Bodies.rectangle(400, 600, 810, 30, { isStatic: true }),  // 하단
+            Bodies.rectangle(0, 300, 30, 610, { isStatic: true }),    // 좌측
+            Bodies.rectangle(800, 300, 30, 610, { isStatic: true })   // 우측
+        ];
+        World.add(world, boundaries);
+
+        // 마우스 제어 추가
+        const mouse = Mouse.create(render.canvas);
+        const mouseConstraint = MouseConstraint.create(engine, {
+            mouse: mouse,
+            constraint: {
+                render: { visible: false }
+            }
+        });
+        World.add(world, mouseConstraint);
+
+        let selectedTool = null;
+
+        // 선택한 도형이나 기믹을 클릭한 지점에 생성
+        render.canvas.addEventListener('mousedown', function (event) {
+            const mousePos = mouse.position;
+
+            switch (selectedTool) {
+                case 'rectangle':
+                    const rectangle = Bodies.rectangle(mousePos.x, mousePos.y, 80, 80, { render: { fillStyle: 'blue' } });
+                    World.add(world, rectangle);
+                    break;
+
+                case 'circle':
+                    const circle = Bodies.circle(mousePos.x, mousePos.y, 40, { render: { fillStyle: 'green' } });
+                    World.add(world, circle);
+                    break;
+
+                case 'triangle':
+                    const triangle = Bodies.polygon(mousePos.x, mousePos.y, 3, 60, { render: { fillStyle: 'purple' } });
+                    World.add(world, triangle);
+                    break;
+
+                case 'bomb':
+                    const bomb = Bodies.circle(mousePos.x, mousePos.y, 30, { render: { fillStyle: 'red' }, label: 'bomb' });
+                    World.add(world, bomb);
+
+                    Events.on(engine, 'collisionStart', function (event) {
+                        event.pairs.forEach(pair => {
+                            if (pair.bodyA.label === 'bomb' || pair.bodyB.label === 'bomb') {
+                                const explosionForce = 0.05;
+                                Matter.Body.applyForce(pair.bodyA, pair.bodyA.position, {
+                                    x: (Math.random() - 0.5) * explosionForce,
+                                    y: (Math.random() - 0.5) * explosionForce
+                                });
+                                Matter.Body.applyForce(pair.bodyB, pair.bodyB.position, {
+                                    x: (Math.random() - 0.5) * explosionForce,
+                                    y: (Math.random() - 0.5) * explosionForce
+                                });
+                                World.remove(world, bomb);
+                            }
+                        });
+                    });
+                    break;
+
+                default:
+                    break;
+            }
+        });
+
+        // 도구 선택 버튼 이벤트
+        document.getElementById('select-rectangle').addEventListener('click', () => {
+            selectedTool = 'rectangle';
+        });
+        document.getElementById('select-circle').addEventListener('click', () => {
+            selectedTool = 'circle';
+        });
+        document.getElementById('select-triangle').addEventListener('click', () => {
+            selectedTool = 'triangle';
+        });
+        document.getElementById('select-bomb').addEventListener('click', () => {
+            selectedTool = 'bomb';
+        });
+
+        // 중력 반전
+        let gravityInverted = false;
+        document.getElementById('reverse-gravity').addEventListener('click', () => {
+            gravityInverted = !gravityInverted;
+            engine.gravity.y = gravityInverted ? -1 : 1;
+        });
+
+        // 자석 효과 (모든 객체를 특정 방향으로 끌어당김)
+        document.getElementById('add-magnet').addEventListener('click', () => {
+            const magnetPos = { x: 400, y: 300 };
+            World.bodies.forEach(body => {
+                const force = {
+                    x: (magnetPos.x - body.position.x) * 1e-5,
+                    y: (magnetPos.y - body.position.y) * 1e-5
+                };
+                Matter.Body.applyForce(body, body.position, force);
+            });
+        });
+
+        // 바운스 증가 (반발력 증가)
+        document.getElementById('increase-bounce').addEventListener('click', () => {
+            World.bodies.forEach(body => {
+                body.restitution = 1.5;
+            });
+        });
+
+        // 속도 증가
+        document.getElementById('increase-speed').addEventListener('click', () => {
+            World.bodies.forEach(body => {
+                Matter.Body.setVelocity(body, {
+                    x: body.velocity.x * 2,
+                    y: body.velocity.y * 2
+                });
+            });
+        });
+
+        // 매 프레임 렌더링
+        (function animate() {
+            Engine.update(engine);
+            requestAnimationFrame(animate);
+        })();
+    </script>
+</body>
+
+</html>

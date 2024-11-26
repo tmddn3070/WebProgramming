@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/smoo/Downloads/이벤트_브라우저객체 (1)",
+      "program": "/Users/smoo/Downloads/이벤트_브라우저객체 (1)/build/Debug/outDebug"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+<body>
+    <canvas id="Canvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
+    <script>
+        const canvas = document.getElementById('Canvas');
+        const ctx = canvas.getContext('2d');
+
+        ctx.moveTo(50, 250);
+        ctx.bezierCurveTo(50, 200, 200, 100, 200, 250);
+        ctx.stroke();
+    </script>
+</body>

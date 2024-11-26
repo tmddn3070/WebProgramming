@@ -1,0 +1,27 @@
+<body></body>
+    <canvas id="Canvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
+    <script>
+        const canvas = document.getElementById('Canvas');
+        const ctx = canvas.getContext('2d');
+
+        ctx.beginPath();
+        ctx.moveTo(190, 360); 
+        ctx.lineTo(150, 400);
+        ctx.lineTo(250, 400);
+        ctx.lineTo(190, 360);
+        ctx.closePath(); 
+
+        ctx.fillStyle = 'orange';
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(260, 360); 
+        ctx.lineTo(220, 400);
+        ctx.lineTo(320, 400);
+        ctx.lineTo(260, 360);
+        ctx.closePath(); 
+
+        ctx.strokeStyle = 'black';
+        ctx.stroke();
+    </script>
+</body>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+
+        for (let i = 0; i < 10; i++) {
+            context.lineWidth = i + 1;
+            context.beginPath();
+            context.moveTo(50, 50 + i * 10);
+            context.lineTo(450, 50 + i * 10);
+            context.stroke();
+        }   
+
+
+    </script>
+</body>
+</html>

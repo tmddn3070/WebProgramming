@@ -1,0 +1,48 @@
+<body>
+    <canvas id="Canvas" width="1000" height="1000" style="border:1px solid #000000;"></canvas>
+    <script>
+        const canvas = document.getElementById('Canvas');
+        const ctx = canvas.getContext('2d');
+        const [centerX, centerY, radius] = [canvas.width / 2, canvas.height / 2, 400];
+
+        const drawColorGamutCurve = (points, color, label) => {
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            points.slice(1).forEach(p => ctx.lineTo(p.x, p.y));
+            ctx.closePath();
+            ctx.fillStyle = color;
+            ctx.globalAlpha = 0.4;
+            ctx.fill();
+            ctx.globalAlpha = 1.0;
+            ctx.strokeStyle = color;
+            ctx.stroke();
+            ctx.font = "20px Arial";
+            ctx.fillStyle = color;
+            ctx.fillText(label, points[0].x + 10, points[0].y - 10);
+        };
+
+        const drawColorGamutGradient = () => {
+            for (let angle = 0; angle < 360; angle += 0.05) {
+                const radian = (angle * Math.PI) / 180;
+                const [x, y] = [centerX + radius * Math.cos(radian), centerY + radius * Math.sin(radian)];
+                const gradient = ctx.createLinearGradient(centerX, centerY, x, y);
+                gradient.addColorStop(0, 'white');
+                gradient.addColorStop(1, `hsl(${angle}, 100%, 50%)`);
+                ctx.strokeStyle = gradient;
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+            }
+        };
+
+        const pointsData = [
+            { points: [{ x: centerX + radius * 0.67, y: centerY - radius * 0.5 }, { x: centerX + radius * 0.1, y: centerY + radius * 0.75 }, { x: centerX - radius * 0.65, y: centerY - radius * 0.6 }], color: "blue", label: "NTSC" },
+            { points: [{ x: centerX + radius * 0.6, y: centerY - radius * 0.45 }, { x: centerX, y: centerY + radius * 0.7 }, { x: centerX - radius * 0.55, y: centerY - radius * 0.5 }], color: "green", label: "sRGB" },
+            { points: [{ x: centerX + radius * 0.63, y: centerY - radius * 0.52 }, { x: centerX + radius * 0.05, y: centerY + radius * 0.65 }, { x: centerX - radius * 0.58, y: centerY - radius * 0.63 }], color: "red", label: "DCI-P3" }
+        ];
+
+        pointsData.forEach(({ points, color, label }) => drawColorGamutCurve(points, color, label));
+        drawColorGamutGradient();
+    </script>
+</body>

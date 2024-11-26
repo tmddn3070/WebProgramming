@@ -25,7 +25,7 @@ scaler: pickle.Unpickler = pickle.load(open(encoder_paths['scaler'], 'rb'))
 
 
 def is_power(c1: Tuple[Tuple[float, float], str], c2: Tuple[Tuple[float, float], str]) -> bool:
-    """주어진 두 점 사이의 각도가 20도에서 70도 사이인지 확인합니다.
+    """주어진 두 점 사이의 각도가 20도에서 70도 사이인지 확인하는 로 직
 
     Args:
         c1 (Tuple[Tuple[float, float], str])
@@ -40,7 +40,7 @@ def is_power(c1: Tuple[Tuple[float, float], str], c2: Tuple[Tuple[float, float],
     return 20 <= angle_deg <= 70
 
 def combine_elements(contour_predict: List[Tuple[Tuple[float, float], str]], element_type: str = 'number') -> List[Union[Tuple[Tuple[float, float], str], Tuple[Tuple[float, float], str]]]:
-    """인식된 컨투어에서 숫자와 지수를 결합합니다.
+    """인식된 컨투어에서 숫자와 지수를 결합
     Args:
         contour_predict (List[Tuple[Tuple[float, float], str]])
         element_type (str, optional) default 'number'.
@@ -79,7 +79,7 @@ def combine_elements(contour_predict: List[Tuple[Tuple[float, float], str]], ele
     return combined_elements
 
 def replace_words_and_operators(input_str: str, replacements: Dict[str, str]) -> str:
-    """문자열에서 특정 단어나 연산자를 다른 단어나 연산자로 대체합니다.
+    """문자열에서 특정 단어나 연산자를 다른 단어나 연산자로 대체하는 로직
 
     Args:
         input_str (str)
@@ -93,7 +93,7 @@ def replace_words_and_operators(input_str: str, replacements: Dict[str, str]) ->
     return input_str.replace(" ", "")
 
 def replace_root(input_str: str) -> str:
-    """문자열에서 제곱근 표기법을 처리합니다.
+    """문자열에서 제곱근 표기법을 처리하는 함ㅂ수
 
     Args:
         input_str (str)
@@ -120,7 +120,7 @@ def calculate_expression(expression: str) -> Union[int, float, None]:
         return None
 
 def format_eq(exp: str) -> str:
-    """수학식을 HTML 형식으로 변환합니다.
+    """수학식을 HTML 형식으로 변환
 
     Args:
         exp (str)
@@ -133,7 +133,7 @@ def format_eq(exp: str) -> str:
     return exp
 
 def parse_equation(equation: str) -> Tuple[List[int], int]:
-    """수학식을 파싱합니다.
+    """수학식을 파싱
 
     Args:
         equation (str)
@@ -159,7 +159,7 @@ def parse_equation(equation: str) -> Tuple[List[int], int]:
     return lhs_coeffs, int(rhs)
 
 def calculate_roots(equation: str) -> str:
-    """제곱근을 계산합니다.
+    """제곱근을 계산
 
     Args:
         equation (str)
@@ -172,7 +172,7 @@ def calculate_roots(equation: str) -> str:
     return ', '.join(map(str, roots))
 
 def predict_image(image: np.ndarray, model_type: str) -> str:
-    """이미지를 추론합니다
+    """이미지를 추론하는 로직
 
     Args:
         image (np.ndarray)
@@ -193,7 +193,7 @@ def predict_image(image: np.ndarray, model_type: str) -> str:
     return encoder.inverse_transform([np.argmax(predictions)])[0]
 
 def process_image(image: np.ndarray, model_type: str) -> Tuple[Union[str, int, float, None], str]:
-    """이미지를 처리합니다.
+    """이미지를 처리하는 로지 ㄱ
 
     Args:
         image (np.ndarray)

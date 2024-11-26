@@ -1,0 +1,20 @@
+<body>
+    <canvas id="Canvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
+    <script>
+        const canvas = document.getElementById('Canvas');
+        const ctx = canvas.getContext('2d');
+        const svgData = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="30" fill="none"><path fill="#121217" d="M12.458 14.658s-8.157 1.02-8.071-3.518c.1-5.353 5.892-9.498 10.445-10.64 0 0-5.111.94-8.575 3.248S0 9.272 0 11.993s2.823 4.04 4.107 4.26 3.966.357 8.351-1.595"></path><path fill="#121217" d="M.764 29.5s7.066-2.503 12.68-7.503c5.612-5 6.617-12.711-4.935-10.5 0 0 4.726-1.928 8.138-1.928s7.35.633 7.35 4.526C23.998 19.385 13.8 28.945.763 29.5M21.475 2.619c.753 1.283.16 3.008-1.327 3.852s-3.3.488-4.053-.796c-.753-1.283-.132-2.962 1.326-3.851 1.27-.774 3.301-.489 4.054.795"></path></svg>`;
+        const img = new Image();
+        const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+        const url = URL.createObjectURL(svgBlob);
+
+        img.onload = function() {
+            const pattern = ctx.createPattern(img, 'repeat');
+            ctx.fillStyle = pattern;
+            ctx.fillRect(0, 0, 500, 500);
+            URL.revokeObjectURL(url);
+        };
+
+        img.src = url;
+    </script>
+</body>

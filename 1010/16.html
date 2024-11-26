@@ -1,0 +1,15 @@
+<body>
+    <canvas id="Canvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
+    <script>
+        const canvas = document.getElementById('Canvas');
+        const ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = 'blue';
+        ctx.fillRect(50, 50, 100, 100);
+
+        ctx.globalCompositeOperation = 'source-atop';
+
+        ctx.fillStyle = 'red';
+        ctx.fillRect(120, 120, 100, 100);
+    </script>
+</body>

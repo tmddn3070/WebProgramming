@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>지뢰찾기 게임</title>
+  <script src="https://cdn.tailwindcss.com"></script>       
+  <script src="https://unpkg.com/fireworks-js@2.x/dist/index.umd.js"></script>
+  <style>
+    body {
+      @apply flex items-center justify-center min-h-screen;
+
+    }
+    .container {
+      @apply flex flex-col items-center bg-white p-10 rounded-lg shadow-lg;
+    }
+    .board {
+      display: grid;
+      grid-template-columns: repeat(var(--columns), 40px);
+      gap: 5px;
+      justify-content: center;
+    }
+    .cell {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f0f0f0;
+      cursor: pointer;
+      border: 2px solid #ddd;
+      transition: background-color 0.3s;
+    }
+    .cell:hover {
+      background-color: #e0e0e0;
+    }
+    .cell.open {
+      background-color: #ddd;
+      cursor: default;
+    }
+    .cell.flag {
+      background-color: #ffeb3b;
+    }
+    .cell.mine {
+      background-color: #f44336;
+    }
+    .cell.revealed {
+      background-color: #ffcccc;
+    }
+    #firework-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="firework-canvas"></div>
+
+  <div class="container">
+    <h1 class="text-4xl font-bold text-gray-800 mb-6 text-center">지뢰찾기 게임</h1>
+    <div class="flex justify-center space-x-4 mb-6">
+      <button id="easy" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">쉬움</button>
+      <button id="medium" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">보통</button>
+      <button id="hard" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">어려움</button>
+      <button id="extreme" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded">익스트림</button>
+    </div>
+    <div class="flex justify-center space-x-4 mb-6">
+      <label class="flex items-center">
+        <input type="checkbox" id="randomMineMode" class="mr-2">
+        <span>랜덤 지뢰 이동 모드</span>
+      </label>
+    </div>
+    <div id="timer" class="text-2xl font-bold text-gray-700 mb-4 text-center">타이머: 00:00</div>
+    <div id="board" class="board"></div>
+    <button id="restart" class="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded hidden text-center">재시작</button>
+    </div>
+</div>
+<div id="resultModal" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
+        <h2 id="resultTitle" class="text-2xl font-bold mb-4 text-center"></h2>
+        <p id="resultTime" class="text-lg text-center"></p>
+        <p id="resultMessage" class="text-lg text-center"></p>
+        <button id="RestartModal" class="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded text-center">다시 시작</button>
+    </div>
+  <script type="module">
+    import { Fireworks } from 'https://cdn.skypack.dev/fireworks-js';
+    const boardElement = document.getElementById('board');
+    const timerElement = document.getElementById('timer');
+    const restartButton = document.getElementById('restart');
+    const randomMineModeCheckbox = document.getElementById('randomMineMode');
+    const resultModal = document.getElementById('resultModal');
+    const resultTitle = document.getElementById('resultTitle');
+    const resultTime = document.getElementById('resultTime');
+    const resultMessage = document.getElementById('resultMessage');
+    const closeModalButton = document.getElementById('RestartModal');
+    let columns = 0;
+    let rows = 0;
+    let mines = 0;
+    let timer = null;
+    let time = 0;
+    let board = [];
+    let gameover = false;
+    let randomMineInterval = null;
+
+    document.getElementById('easy').addEventListener('click', () => startGame(8, 8, 10));
+    document.getElementById('medium').addEventListener('click', () => startGame(12, 12, 20));
+    document.getElementById('hard').addEventListener('click', () => startGame(16, 16, 40));
+    document.getElementById('extreme').addEventListener('click', () => startGame(20, 20, 60));
+
+    restartButton.addEventListener('click', () => startGame(columns, rows, mines));
+
+    function startGame(col, row, mineCount) {
+      columns = col;
+      rows = row;
+      mines = mineCount;
+      boardElement.style.setProperty('--columns', columns);
+      board = [];
+      gameover = false;
+      time = 0;
+      clearInterval(timer);
+      clearInterval(randomMineInterval);
+      timerElement.textContent = '타이머: 00:00';
+      restartButton.classList.add('hidden');
+      createBoard();
+      startTimer();
+
+      if (randomMineModeCheckbox.checked) {
+        randomMineInterval = setInterval(moveMinesRandomly, 5000); 
+      }
+    }
+
+    function startTimer() {
+      timer = setInterval(() => {
+        time++;
+        const minutes = String(Math.floor(time / 60)).padStart(2, '0');
+        const seconds = String(time % 60).padStart(2, '0');
+        timerElement.textContent = `타이머: ${minutes}:${seconds}`;
+      }, 1000);
+    }
+
+    function createBoard() {
+      boardElement.innerHTML = '';
+      const cells = [];
+
+      for (let x = 0; x < rows; x++) {
+        board[x] = [];
+        for (let y = 0; y < columns; y++) {
+          const cell = document.createElement('div');
+          cell.classList.add('cell');
+          cell.dataset.x = x;
+          cell.dataset.y = y;
+
+          cell.addEventListener('click', () => {
+            if (gameover) return;
+            openCell(x, y);
+          });
+
+          cell.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            if (gameover) return;
+            board[x][y].flagged = !board[x][y].flagged;
+            cell.classList.toggle('flag', board[x][y].flagged);
+            if (checkWin()) {
+              endGame(true);
+            }
+
+          });
+
+          board[x][y] = { mine: false, open: false, flagged: false };
+          cells.push(cell);
+          boardElement.appendChild(cell);
+        }
+      }
+
+      // 지뢰 배치
+      for (let i = 0; i < mines; i++) {
+        placeMineRandomly();
+      }
+    }
+
+    function placeMineRandomly() {
+      let placed = false;
+      while (!placed) {
+        const x = Math.floor(Math.random() * rows);
+        const y = Math.floor(Math.random() * columns);
+        if (!board[x][y].mine) {
+          board[x][y].mine = true;
+          placed = true;
+        }
+      }
+    }
+
+    function openCell(x, y) {
+      if (board[x][y].open || board[x][y].flagged) return;
+      const cell = document.querySelector(`.cell[data-x='${x}'][data-y='${y}']`);
+      board[x][y].open = true;
+      cell.classList.add('open');
+      if (board[x][y].mine) {
+        cell.classList.add('mine');
+        endGame(false);
+        return;
+      }
+
+      const adjacentMines = countMines(x, y);
+      if (adjacentMines > 0) {
+        cell.textContent = adjacentMines;
+      } else {
+        openAdjacentCells(x, y);
+      }
+
+      if (checkWin()) {
+        endGame(true);
+      }
+    }
+
+    function openAdjacentCells(x, y) {
+      const adjacent = getAdjacentCells(x, y);
+      adjacent.forEach(([adjX, adjY]) => {
+        openCell(adjX, adjY);
+      });
+    }
+
+    function getAdjacentCells(x, y) {
+      const adjacent = [];
+      for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+          if (i === 0 && j === 0) continue;
+          const newX = x + i;
+          const newY = y + j;
+          if (newX >= 0 && newY >= 0 && newX < rows && newY < columns) {
+            adjacent.push([newX, newY]);
+          }
+        }
+      }
+      return adjacent;
+    }
+
+    function countMines(x, y) {
+      const adjacent = getAdjacentCells(x, y);
+      return adjacent.reduce((count, [adjX, adjY]) => {
+        return count + (board[adjX][adjY].mine ? 1 : 0);
+      }, 0);
+    }
+
+    function checkWin() {
+      return board.flat().every(cell => (cell.mine && cell.flagged) || (!cell.mine && cell.open));
+    }
+
+    function endGame(won) {
+      gameover = true;
+      clearInterval(timer);
+      clearInterval(randomMineInterval);
+      revealMines();
+      if (won) {
+        startFireworks();
+        resultTitle.textContent = '승리했습니다! 🎉';
+        resultMessage.textContent = '축하합니다! 지뢰찾기를 성공하셨습니다.';
+        resultTime.textContent = `소요 시간: ${timerElement.textContent.split(' ')[1]}`;
+        resultModal.classList.remove('hidden');
+      } else {
+        resultTitle.textContent = '지뢰를 밟았습니다!';
+        resultMessage.textContent = '안타깝지만 지뢰를 밟으셨습니다. 다시 도전해보세요!';
+        resultTime.textContent = `소요 시간: ${timerElement.textContent.split(' ')[1]}`;
+        resultModal.classList.remove('hidden');
+      }
+
+        closeModalButton.addEventListener('click', () => {
+            resultModal.classList.add('hidden');
+            startGame(columns, rows, mines);
+            });
+
+    }
+
+    function revealMines() {
+      for (let x = 0; x < rows; x++) {
+        for (let y = 0; y < columns; y++) {
+          if (board[x][y].mine && !board[x][y].open) {
+            const cell = document.querySelector(`.cell[data-x='${x}'][data-y='${y}']`);
+            cell.classList.add('revealed');
+          }
+        }
+      }
+    }
+
+    function moveMinesRandomly() {
+      for (let x = 0; x < rows; x++) {
+        for (let y = 0; y < columns; y++) {
+          if (board[x][y].mine) {
+            board[x][y].mine = false;
+          }
+        }
+      }
+      for (let i = 0; i < mines; i++) {
+        placeMineRandomly();
+      }
+    }
+
+    function startFireworks() {
+      const container = document.getElementById('firework-canvas');
+      const fireworks = new Fireworks(container, { 
+        speed: 3,
+        acceleration: 1.05,
+        particles: 150
+      });
+      fireworks.start();
+
+      setTimeout(() => fireworks.stop(), 12000);
+    }
+  </script>
+
+</body>
+</html>

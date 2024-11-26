@@ -1,0 +1,18 @@
+<body>
+    <canvas id="Canvas" width="400" height="100" style="border:1px solid #000000;"></canvas>
+    <script>
+        const canvas = document.getElementById('Canvas');
+        const ctx = canvas.getContext('2d');
+
+        const randomX = Math.random() * 400;
+        const randomY = Math.random() * 100 ;
+
+        const gradient = ctx.createRadialGradient(randomX, randomY, 10, randomX, randomY, 100);
+        
+        gradient.addColorStop(0, 'white');
+        gradient.addColorStop(1, 'red');
+
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 400, 100);
+    </script>
+</body>

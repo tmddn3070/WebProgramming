@@ -1,0 +1,29 @@
+<body>
+    <canvas id="Canvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
+    <script>
+        const canvas = document.getElementById('Canvas');
+        const ctx = canvas.getContext('2d');
+        // 0.25 * Math.PI는 45도, 1.75 * Math.PI는 315도
+        ctx.beginPath();
+        ctx.arc(250, 250, 100, 0, Math.PI * 2);
+        ctx.strokeStyle = 'red';
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(250, 250, 70, 0.25 * Math.PI, 1.75 * Math.PI); 
+        ctx.strokeStyle = 'green';
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(250 + 70 * Math.cos(0.25 * Math.PI), 250 + 70 * Math.sin(0.25 * Math.PI));
+        ctx.lineTo(250 + 70 * Math.cos(1.75 * Math.PI), 250 + 70 * Math.sin(1.75 * Math.PI));
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(250, 250, 40, 0.25 * Math.PI, 1.75 * Math.PI);
+        ctx.strokeStyle = 'blue';
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(250 + 40 * Math.cos(0.25 * Math.PI), 250 + 40 * Math.sin(0.25 * Math.PI));
+        ctx.stroke();
+    </script>
+</body>

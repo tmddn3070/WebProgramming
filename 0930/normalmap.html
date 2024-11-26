@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <canvas id="Canvas" width="500" height="500"></canvas>
+    <script>
+        function NormalMap(width, height) {
+            const imageData = new ImageData(width, height);
+            const data = imageData.data;
+
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    const index = (y * width + x) * 4;
+                    const nx = (x / width) * 2 - 1;
+                    const ny = (y / height) * 2 - 1;
+                    const nz = Math.sqrt(1 - nx * nx - ny * ny);
+
+                    data[index] = Math.floor((nx + 1) * 127.5);
+                    data[index + 1] = Math.floor((ny + 1) * 127.5);
+                    data[index + 2] = Math.floor((nz + 1) * 127.5); 
+                    data[index + 3] = 255;
+                }
+            }
+
+            return imageData;
+        }
+
+        const canvas = document.getElementById('Canvas');
+        const context = canvas.getContext('2d');
+        const normalMap = NormalMap(500, 500);
+        context.putImageData(normalMap, 0, 0);
+
+
+    </script>
+</body>
+</html>

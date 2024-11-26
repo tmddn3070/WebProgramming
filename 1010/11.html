@@ -1,0 +1,14 @@
+<body>
+    <canvas id="Canvas" width="400" height="100" style="border:1px solid #000000;"></canvas>
+    <script>
+        const canvas = document.getElementById('Canvas');
+        const ctx = canvas.getContext('2d');
+        const gradient = ctx.createLinearGradient(0, 100, 400, 100);
+        
+        gradient.addColorStop(0, 'white');
+        gradient.addColorStop(1, 'red');
+
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    </script>
+</body>

@@ -1,0 +1,17 @@
+<body>
+    <canvas id="Canvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
+    <script>
+        const canvas = document.getElementById('Canvas');
+        const ctx = canvas.getContext('2d');
+
+        ctx.beginPath();
+        ctx.moveTo(180, 360); 
+        ctx.lineTo(150, 400);
+        ctx.lineTo(250, 400);
+        ctx.lineTo(180, 360);
+        ctx.closePath(); 
+
+        ctx.fillStyle = 'black';
+        ctx.fill();
+    </script>
+</body>

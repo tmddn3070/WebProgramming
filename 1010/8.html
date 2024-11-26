@@ -1,0 +1,13 @@
+<body>
+    <canvas id="Canvas" width="1000" height="1000" style="border:1px solid #000000;"></canvas>
+    <script>
+        const canvas = document.getElementById('Canvas');
+        const ctx = canvas.getContext('2d');
+
+        const img = new Image();
+        img.src = 'https://http.cat/images/208.jpg';    
+        img.onload = () => {
+            ctx.drawImage(img, 0, 0);
+        }
+    </script>
+</body>
